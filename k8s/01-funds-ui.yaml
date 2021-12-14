@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: funds-webui
+  name: funds-ui
   namespace: kube-system
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: funds-webui
+      app: funds-ui
   template:
     metadata:
       labels:
-        app: funds-webui
+        app: funds-ui
     spec:
       containers:
-        - name: funds-webui
-          image: uhub.service.ucloud.cn/entropypool/funds-webui:latest
+        - name: funds-ui
+          image: uhub.service.ucloud.cn/entropypool/funds-ui:latest
           imagePullPolicy: Always
           env:
             - name: ENV_ENVIRONMENT_TARGET
@@ -42,7 +42,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: funds-webui
+  name: funds-ui
   namespace: kube-system
 spec:
   ports:
@@ -50,4 +50,4 @@ spec:
       port: 80
       targetPort: 80
   selector:
-    app: funds-webui
+    app: funds-ui

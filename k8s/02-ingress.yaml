@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: funds-webui-ingress
+  name: funds-ui-ingress
   namespace: kube-system
   annotations:
-    k8s.kuboard.cn/displayName: funds-webui
-    k8s.kuboard.cn/workload: funds-webui
+    k8s.kuboard.cn/displayName: funds-ui
+    k8s.kuboard.cn/workload: funds-ui
     kubernetes.io/ingress.class: "traefik-internet"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure, web
     traefik.ingress.kubernetes.io/router.middlewares: kube-system-redirect-https@kubernetescrd
@@ -22,5 +22,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: funds-webui
+              serviceName: funds-ui
               servicePort: 80
