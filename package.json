@@ -9,6 +9,9 @@
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
@@ -29,7 +32,8 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "pre-commit": "^1.2.2"
   },
   "browserslist": [
     "last 10 Chrome versions",
