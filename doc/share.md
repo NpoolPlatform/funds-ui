@@ -44,6 +44,7 @@ const emit = defineEmits<{
 </template>
 ```
 
+### pre-commit
 ### async/await
 
 ## vuex
