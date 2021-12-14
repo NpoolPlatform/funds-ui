@@ -1,8 +1,8 @@
 {
-  "name": "funds",
+  "name": "funds-webui",
   "version": "0.0.1",
-  "description": "block chain funds",
-  "productName": "funds",
+  "description": "block chain funds webui",
+  "productName": "funds-webui",
   "author": "linuxpizi <1360447275@qq.com>",
   "private": true,
   "scripts": {
