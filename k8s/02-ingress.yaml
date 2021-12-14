@@ -6,18 +6,13 @@ metadata:
   annotations:
     k8s.kuboard.cn/displayName: funds-webui
     k8s.kuboard.cn/workload: funds-webui
-    kubernetes.io/ingress.class: "traefik-internet"
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure, web
-    traefik.ingress.kubernetes.io/router.middlewares: kube-system-redirect-https@kubernetescrd
+    kubernetes.io/ingress.class: "devops-vpn-nginx-internal"
+    nginx.com/sticky-cookie-services: "serviceName=kuboard srv_id expires=1h path=/"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 
 spec:
-  tls:
-      - hosts:
-          - www.funds.npool.top
-          - funds.npool.top
-        secretName: funds-npool-top-tls
   rules:
-    - host: www.funds.npool.top
+    - host: funds.npool.top
       http:
         paths:
           - path: /
