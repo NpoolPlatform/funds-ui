@@ -18,3 +18,9 @@ spec:
             backend:
               serviceName: funds-webui
               servicePort: 80
+    - host: funds.xpool.top
+      http: *http_rules
+    - host: www.funds.npool.top
+      http: *http_rules
+    - host: www.funds.xpool.top
+      http: *http_rules
