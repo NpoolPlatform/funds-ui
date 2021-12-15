@@ -12,7 +12,7 @@ metadata:
 spec:
   rules:
     - host: funds.npool.top
-      http:
+      http: &http_rules
         paths:
           - path: /
             backend:
