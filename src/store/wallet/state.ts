@@ -1,13 +1,29 @@
-export interface WalletInfo {
-  name: string
-  from: string
-  to: string
-  balance: string
-  balanceStr: string
+export interface WalletState {
+  Name: string
+  From: string
+  To: string
+  Amount: number
+
+  Balance: number
+  BalanceStr: string
+
+  Address: string
+
+  error: string
+  loading: boolean
 }
 
-function state (): WalletInfo {
-  return {} as WalletInfo
-}
+export const state: WalletState = {
+  Name: '',
+  From: '',
+  To: '',
+  Amount: 0,
 
-export default state
+  Balance: 0,
+  BalanceStr: '',
+
+  Address: '',
+
+  error: '',
+  loading: false
+}

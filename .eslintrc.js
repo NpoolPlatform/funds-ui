@@ -77,6 +77,8 @@ module.exports = {
     'arrow-parens': 'off',
     'one-var': 'off',
     'no-void': 'off',
+    // self define
+    'no-unused-vars':'off',
     'multiline-ternary': 'off',
 
     'import/first': 'off',

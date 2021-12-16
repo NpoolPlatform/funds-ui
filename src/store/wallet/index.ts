@@ -1,16 +1,22 @@
+import { WalletState, state } from './state'
+import { Getters, getters } from './getters'
+import { Mutations, mutations } from './mutations'
+import { Actions, actions } from './actions'
 import { Module } from 'vuex'
 import { StateInterface } from '../index'
-import state, { WalletInfo } from './state'
-import actions from './actions'
-import getters from './getters'
-import mutations from './mutations'
 
-const wallet: Module<WalletInfo, StateInterface> = {
-  namespaced: true,
+const wallet: Module<WalletState, StateInterface> = {
+  // namespaced: true,
   actions,
   getters,
   mutations,
   state
 }
 
-export default wallet
+export {
+  wallet,
+  WalletState, state,
+  Getters, getters,
+  Mutations, mutations,
+  Actions, actions
+}

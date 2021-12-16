@@ -22,25 +22,27 @@
     <q-btn no-caps color="primary" class="wallet-submit" @click="submit" :loading="loading">
       <div>submit</div>
     </q-btn>
+    {{ address }}
   </div>
 </template>
 
 <script setup lang="ts">
 import CoinList from '../base/CoinList.vue'
-import { ref } from 'vue'
-import { api } from 'boot/axios'
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'src/store/index'
+import { ActionTypes } from 'src/store/wallet/action-types'
+const store = useStore()
 
 const from = ref('')
 const to = ref('')
 const amount = ref(0)
 const loading = ref(false)
+const address = computed(() => store.getters.getAddress)
+
+onMounted(() => store.dispatch(ActionTypes.CreateWallet, { Name: 'FIL' }))
 
 const submit = () => {
-  console.log('submit')
-  loading.value = true
-  setTimeout(() => { loading.value = false }, 1000)
-  api.post('', {}).then((response) => console.log('response:', response)).catch(e => console.log('', e))
-  loading.value = false
+  console.log(store.getters, address.value)
 }
 </script>
 

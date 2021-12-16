@@ -16,7 +16,7 @@ module.exports = configure(function (ctx) {
     supportTS: {
       tsCheckerConfig: {
         eslint: {
-          enabled: true,
+          enabled: false,
           files: './src/**/*.{ts,tsx,js,jsx,vue}'
         }
       }
@@ -82,9 +82,18 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-      server: {
-        type: 'http'
+      proxy: {
+        '/api': {
+          target: 'http://www.internal-devops.development.xpool.top',
+          pathRewrite: {
+            '^/api': '/api'
+          },
+          secure: false,
+          changeOrigin: true
+        }
       },
+
+      https: false,
       port: 8080,
       open: true // opens browser window automatically
     },

@@ -3,14 +3,21 @@ import { InjectionKey } from 'vue'
 import {
   createStore,
   Store as VuexStore,
-  useStore as vuexUseStore
+  useStore as vuexUseStore,
+  CommitOptions,
+  DispatchOptions
 } from 'vuex'
 
-import wallet from './wallet'
-import { WalletInfo } from './wallet/state'
+import {
+  wallet,
+  WalletState,
+  Mutations,
+  Actions,
+  Getters
+} from './wallet'
 
 export interface StateInterface {
-  wallet: WalletInfo;
+  wallet: WalletState;
 }
 
 declare module '@vue/runtime-core' {
@@ -21,6 +28,27 @@ declare module '@vue/runtime-core' {
 
 // provide typings for `useStore` helper
 export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-key')
+
+export type Store = Omit<
+  VuexStore<StateInterface>,
+  'getters' | 'commit' | 'dispatch'
+> & {
+  commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
+    key: K,
+    payload: P,
+    options?: CommitOptions
+  ): ReturnType<Mutations[K]>
+} & {
+  dispatch<K extends keyof Actions>(
+    key: K,
+    payload?: Parameters<Actions[K]>[1],
+    options?: DispatchOptions
+  ): ReturnType<Actions[K]>
+} & {
+  getters: {
+    [K in keyof Getters]: ReturnType<Getters[K]>
+  }
+}
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
@@ -37,5 +65,5 @@ export default store(function (/* { ssrContext } */) {
 })
 
 export function useStore () {
-  return vuexUseStore(storeKey)
+  return vuexUseStore(storeKey) as Store
 }

@@ -1,11 +1,11 @@
 import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
-import { WalletInfo } from './state'
+import { WalletState } from './state'
 
-const getters: GetterTree<WalletInfo, StateInterface> = {
-  someAction (/* context */) {
-    // your code
-  }
+export type Getters = {
+  getAddress (state: WalletState): string
 }
 
-export default getters
+export const getters: GetterTree<WalletState, StateInterface> & Getters = {
+  getAddress: (state: WalletState) => state.Address
+}

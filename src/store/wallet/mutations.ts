@@ -1,10 +1,21 @@
 import { MutationTree } from 'vuex'
-import { WalletInfo } from './state'
+import { MutationTypes } from './mutation-types'
+import { WalletState } from './state'
 
-const mutation: MutationTree<WalletInfo> = {
-  updateName (state: WalletInfo, payload: string) {
-    state.balanceStr = payload
-  }
+export type Mutations<S = WalletState> = {
+  [MutationTypes.SetAddress] (state: S, payload: string): void
+  [MutationTypes.SetError] (state: S, payload: string): void
+  [MutationTypes.SetLoading] (state: S, payload: boolean): void
 }
 
-export default mutation
+export const mutations: MutationTree<WalletState> & Mutations = {
+  [MutationTypes.SetAddress] (state: WalletState, payload: string) {
+    state.Address = payload
+  },
+  [MutationTypes.SetError] (state: WalletState, payload: string) {
+    state.error = payload
+  },
+  [MutationTypes.SetLoading] (state: WalletState, payload: boolean) {
+    state.loading = payload
+  }
+}

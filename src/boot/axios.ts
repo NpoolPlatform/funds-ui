@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -21,6 +21,23 @@ const api = axios.create({
   timeout: 10000
 })
 
+const post = async <T, R> (url: string, data: T) => {
+  let response: AxiosResponse<R>
+
+  try {
+    response = await api.post<T, AxiosResponse<R>>(url, data)
+  } catch {
+    throw new Error('-2')
+  }
+
+  if (response && response.status === 200 && response.data) {
+    return response.data
+  }
+
+  // TODO handle error
+  throw new Error('')
+}
+
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -33,4 +50,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 })
 
-export { api }
+export { post }
