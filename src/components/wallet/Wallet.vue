@@ -1,8 +1,8 @@
 <template>
   <div>
     <q-tabs v-model="tab" class="text-teal">
-      <q-tab name="create" class="material-icons" icon="o_add_circle" label="create"></q-tab>
-      <q-tab name="transaction" class="material-icons" icon="o_paid" label="transaction"></q-tab>
+      <q-tab name="create" class="material-icons-outlined" icon="add_circle" label="create"></q-tab>
+      <q-tab name="transaction" class="material-icons-outlined" icon="paid" label="transaction"></q-tab>
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>

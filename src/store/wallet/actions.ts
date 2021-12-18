@@ -5,7 +5,14 @@ import { MutationTypes } from './mutation-types'
 import { Mutations } from './mutations'
 import { StateInterface } from '../index'
 import { post } from 'src/boot/axios'
-import { CreateWalletRequest, CreateWalletResponse } from './types'
+import {
+  CreateTransactionRequest,
+  CreateTransactionResponse,
+  CreateWalletRequest,
+  CreateWalletResponse,
+  GetTransactionRequest,
+  GetTransactionResponse
+} from './types'
 
 enum apipath {
   GetBalance = '/sphinx-proxy/v1/get/balance',
@@ -25,7 +32,15 @@ export interface Actions {
   [ActionTypes.CreateWallet] (
     { commit }: AugmentedActionContext,
     payload: CreateWalletRequest
-  ): void
+  ): void,
+  [ActionTypes.CreateTransaction] (
+    { commit }: AugmentedActionContext,
+    payload: CreateTransactionRequest
+  ): void,
+  [ActionTypes.GetTransaction] (
+    { commit }: AugmentedActionContext,
+    payload: GetTransactionRequest
+  ): void,
 }
 
 export const actions: ActionTree<WalletState, StateInterface> & Actions = {
@@ -34,11 +49,44 @@ export const actions: ActionTree<WalletState, StateInterface> & Actions = {
     post<CreateWalletRequest, CreateWalletResponse>(apipath.CreateWallet, payload)
       .then((response: CreateWalletResponse) => {
         commit(MutationTypes.SetAddress, response.Info.Address)
+        commit(MutationTypes.SetError, '')
+        commit(MutationTypes.SetLoading, false)
+      })
+      .catch(err => {
+        commit(MutationTypes.SetAddress, '')
+        commit(MutationTypes.SetError, err)
+        commit(MutationTypes.SetLoading, false)
+      })
+  },
+  [ActionTypes.CreateTransaction] ({ commit }, payload: CreateTransactionRequest) {
+    commit(MutationTypes.SetLoading, true)
+    post<CreateTransactionRequest, CreateTransactionResponse>(apipath.CreateTransaction, payload)
+      .then((_: CreateTransactionResponse) => {
+        commit(MutationTypes.SetError, '')
         commit(MutationTypes.SetLoading, false)
       })
       .catch(err => {
         commit(MutationTypes.SetError, err)
         commit(MutationTypes.SetLoading, false)
       })
+  },
+  [ActionTypes.GetTransaction] ({ commit }, payload: GetTransactionRequest) {
+    commit(MutationTypes.SetLoading, true)
+    const cancel = setInterval(() => {
+      post<GetTransactionRequest, GetTransactionResponse>(apipath.GetTransaction, payload)
+        .then((response: GetTransactionResponse) => {
+          commit(MutationTypes.SetCID, response.Info.CID)
+          if (response.Info.ExitCode !== '-1') {
+            commit(MutationTypes.SetCID, response.Info.CID)
+            commit(MutationTypes.SetLoading, false)
+            clearInterval(cancel)
+          }
+        })
+        .catch(err => {
+          commit(MutationTypes.SetError, err)
+          commit(MutationTypes.SetLoading, false)
+          clearInterval(cancel)
+        })
+    }, 1000)
   }
 }

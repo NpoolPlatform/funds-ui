@@ -16,7 +16,7 @@ module.exports = configure(function (ctx) {
     supportTS: {
       tsCheckerConfig: {
         eslint: {
-          enabled: false,
+          enabled: true,
           files: './src/**/*.{ts,tsx,js,jsx,vue}'
         }
       }

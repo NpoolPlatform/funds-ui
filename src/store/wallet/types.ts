@@ -2,11 +2,6 @@ interface WalletInfo {
   Address: string
 }
 
-interface BalanceInfo {
-  Balance: number
-  BalanceStr: string
-}
-
 interface CreateWalletRequest {
   Name: string
 }
@@ -16,16 +11,37 @@ interface CreateWalletResponse {
 }
 
 interface CreateTransactionRequest {
+  TransactionID: string
   Name: string
   From: string
   To: string
   Amount: number
 }
 
-interface CreateTransactionResponse {
-  x: string
+type CreateTransactionResponse = Record<string, unknown>
+
+interface GetTransactionRequest {
+  TransactionID: string
+}
+
+interface TransactionInfo {
+  TransactionID: string
+  Name: string
+  Amount: number
+  From: string
+  To: string
+  CID: string
+  ExitCode: string
+  CreatedAt: number
+  UpdatedAt: number
+}
+
+interface GetTransactionResponse {
+  Info: TransactionInfo
 }
 
 export {
-  CreateWalletRequest, CreateWalletResponse
+  CreateWalletRequest, CreateWalletResponse,
+  CreateTransactionRequest, CreateTransactionResponse,
+  GetTransactionRequest, GetTransactionResponse
 }

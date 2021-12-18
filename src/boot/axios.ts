@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -18,24 +18,21 @@ const api = axios.create({
   baseURL: '/api',
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
+  responseType: 'json',
   timeout: 10000
 })
 
+interface CommonError {
+  code: number
+  message: string
+}
+
 const post = async <T, R> (url: string, data: T) => {
-  let response: AxiosResponse<R>
-
-  try {
-    response = await api.post<T, AxiosResponse<R>>(url, data)
-  } catch {
-    throw new Error('-2')
-  }
-
-  if (response && response.status === 200 && response.data) {
-    return response.data
-  }
-
-  // TODO handle error
-  throw new Error('')
+  return await api.post<T, AxiosResponse<R>>(url, data)
+    .then((data: AxiosResponse<R>) => data.data)
+    .catch((err: AxiosError<CommonError>) => {
+      throw new Error(err.response?.data.message)
+    })
 }
 
 export default boot(({ app }) => {

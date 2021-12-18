@@ -9,6 +9,7 @@ export interface WalletState {
 
   Address: string
 
+  CID: string
   error: string
   loading: boolean
 }
@@ -24,6 +25,7 @@ export const state: WalletState = {
 
   Address: '',
 
+  CID: '',
   error: '',
   loading: false
 }
