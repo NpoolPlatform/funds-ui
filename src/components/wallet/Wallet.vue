@@ -18,13 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import CreateWallet from './create/CreateWallet.vue'
 import transaction from './transaction/Transaction.vue'
-
-onMounted(() => {
-  console.log('mounted')
-})
 
 const tab = ref('transaction')
 </script>
