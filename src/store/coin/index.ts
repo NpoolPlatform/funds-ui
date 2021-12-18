@@ -1,6 +1,6 @@
 import { CoinState, state } from './state'
-import { Getters, getters } from './getters'
-import { Mutations, mutations } from './mutations'
+import { CoinGetters, getters } from './getters'
+import { CoinMutations, mutations } from './mutations'
 import { Module } from 'vuex'
 import { StateInterface } from '../index'
 
@@ -14,6 +14,6 @@ const coin: Module<CoinState, StateInterface> = {
 export {
   coin,
   CoinState, state,
-  Getters, getters,
-  Mutations, mutations
+  CoinGetters, getters,
+  CoinMutations, mutations
 }

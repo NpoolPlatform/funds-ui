@@ -2,14 +2,14 @@ import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { CoinState, state as emptyState } from './state'
 
-export type Mutations<S = CoinState> = {
+type CoinMutations<S = CoinState> = {
   [MutationTypes.SetName] (state: S, payload: string): void
   [MutationTypes.SetError] (state: S, payload: string): void
   [MutationTypes.SetLoading] (state: S, payload: boolean): void
   [MutationTypes.Reset] (state: S): void
 }
 
-export const mutations: MutationTree<CoinState> & Mutations = {
+const mutations: MutationTree<CoinState> & CoinMutations = {
   [MutationTypes.SetName] (state: CoinState, payload: string) {
     state.Name = payload
   },
@@ -25,3 +25,5 @@ export const mutations: MutationTree<CoinState> & Mutations = {
     state.loading = emptyState.loading
   }
 }
+
+export { CoinMutations, mutations }

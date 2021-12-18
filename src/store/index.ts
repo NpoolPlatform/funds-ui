@@ -11,21 +11,21 @@ import {
 import {
   wallet,
   WalletState,
-  Mutations as walletMutations,
-  Actions as walletActions,
-  Getters as walletGetters
+  WalletMutations,
+  WalletActions,
+  WalletGetters
 } from './wallet'
 
 import {
   coin,
   CoinState,
-  Mutations as coinMutations,
-  Getters as coinGetters
+  CoinMutations,
+  CoinGetters
 } from './coin'
 
-type Actions = walletActions
-type Mutations = walletMutations & coinMutations
-type Getters = walletGetters & coinGetters
+type Actions = WalletActions
+type Mutations = WalletMutations & CoinMutations
+type Getters = WalletGetters & CoinGetters
 
 export interface StateInterface {
   wallet: WalletState
