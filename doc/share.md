@@ -58,6 +58,3 @@ const emit = defineEmits<{
 + hide server info
 + gzip
 + cache
-
-
-### [参考](https://dev.to/3vilarthas/vuex-typescript-m4j)

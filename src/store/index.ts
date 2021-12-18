@@ -11,13 +11,25 @@ import {
 import {
   wallet,
   WalletState,
-  Mutations,
-  Actions,
-  Getters
+  Mutations as walletMutations,
+  Actions as walletActions,
+  Getters as walletGetters
 } from './wallet'
 
+import {
+  coin,
+  CoinState,
+  Mutations as coinMutations,
+  Getters as coinGetters
+} from './coin'
+
+type Actions = walletActions
+type Mutations = walletMutations & coinMutations
+type Getters = walletGetters & coinGetters
+
 export interface StateInterface {
-  wallet: WalletState;
+  wallet: WalletState
+  coin: CoinState
 }
 
 declare module '@vue/runtime-core' {
@@ -33,13 +45,13 @@ export type Store = Omit<
   VuexStore<StateInterface>,
   'getters' | 'commit' | 'dispatch'
 > & {
-  commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
+  commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]> (
     key: K,
     payload: P,
     options?: CommitOptions
   ): ReturnType<Mutations[K]>
 } & {
-  dispatch<K extends keyof Actions>(
+  dispatch<K extends keyof Actions> (
     key: K,
     payload?: Parameters<Actions[K]>[1],
     options?: DispatchOptions
@@ -53,7 +65,8 @@ export type Store = Omit<
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      wallet
+      wallet,
+      coin
     },
 
     // enable strict mode (adds overhead!)
