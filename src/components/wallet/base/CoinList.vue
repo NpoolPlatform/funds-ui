@@ -29,7 +29,7 @@ const coinname = computed({
   get (): string {
     return store.getters.getCoinName
   },
-  set (coinname: string) {
+  set (coinname: string): void {
     store.commit(MutationTypes.SetName, coinname)
   }
 })

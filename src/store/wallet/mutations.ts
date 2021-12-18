@@ -2,7 +2,7 @@ import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { WalletState, state as emptyState } from './state'
 
-export type Mutations<S = WalletState> = {
+type WalletMutations<S = WalletState> = {
   [MutationTypes.SetAddress] (state: S, payload: string): void
   [MutationTypes.SetCID] (state: S, payload: string): void
   [MutationTypes.SetError] (state: S, payload: string): void
@@ -10,7 +10,7 @@ export type Mutations<S = WalletState> = {
   [MutationTypes.Reset] (state: S): void
 }
 
-export const mutations: MutationTree<WalletState> & Mutations = {
+const mutations: MutationTree<WalletState> & WalletMutations = {
   [MutationTypes.SetAddress] (state: WalletState, payload: string) {
     state.Address = payload
   },
@@ -24,6 +24,8 @@ export const mutations: MutationTree<WalletState> & Mutations = {
     state.loading = payload
   },
   [MutationTypes.Reset] (state: WalletState) {
-    state = emptyState
+    Object.assign(state, { ...emptyState })
   }
 }
+
+export { WalletMutations, mutations }

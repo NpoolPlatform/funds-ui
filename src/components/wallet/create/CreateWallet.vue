@@ -73,12 +73,4 @@ const handleSubmit = () => {
   height: 30px;
   background-color: bisque;
 }
-
-.wallet >>> button.q-btn:nth-child(3) > span:nth-child(2) {
-  display: block;
-}
-
-.wallet >>> button.q-btn:nth-child(3) > span:nth-child(2) > i:nth-child(1) {
-  float: right;
-}
 </style>

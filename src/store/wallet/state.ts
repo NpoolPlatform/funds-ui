@@ -1,4 +1,4 @@
-export interface WalletState {
+interface WalletState {
   Name: string
   From: string
   To: string
@@ -14,7 +14,7 @@ export interface WalletState {
   loading: boolean
 }
 
-export const state: WalletState = {
+const state: WalletState = {
   Name: '',
   From: '',
   To: '',
@@ -29,3 +29,5 @@ export const state: WalletState = {
   error: '',
   loading: false
 }
+
+export { WalletState, state }

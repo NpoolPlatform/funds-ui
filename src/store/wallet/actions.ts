@@ -2,7 +2,7 @@ import { ActionTree, ActionContext } from 'vuex'
 import { WalletState } from './state'
 import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
-import { Mutations } from './mutations'
+import { WalletMutations } from './mutations'
 import { StateInterface } from '../index'
 import { post } from 'src/boot/axios'
 import {
@@ -22,13 +22,13 @@ enum apipath {
 }
 
 type AugmentedActionContext = {
-  commit<k extends keyof Mutations> (
+  commit<k extends keyof WalletMutations> (
     key: k,
-    payload: Parameters<Mutations[k]>[1]
-  ): ReturnType<Mutations[k]>
+    payload: Parameters<WalletMutations[k]>[1]
+  ): ReturnType<WalletMutations[k]>
 } & Omit<ActionContext<WalletState, StateInterface>, 'commit'>
 
-export interface Actions {
+interface WalletActions {
   [ActionTypes.CreateWallet] (
     { commit }: AugmentedActionContext,
     payload: CreateWalletRequest
@@ -43,7 +43,7 @@ export interface Actions {
   ): void,
 }
 
-export const actions: ActionTree<WalletState, StateInterface> & Actions = {
+const actions: ActionTree<WalletState, StateInterface> & WalletActions = {
   [ActionTypes.CreateWallet] ({ commit }, payload: CreateWalletRequest) {
     commit(MutationTypes.SetLoading, true)
     post<CreateWalletRequest, CreateWalletResponse>(apipath.CreateWallet, payload)
@@ -61,7 +61,7 @@ export const actions: ActionTree<WalletState, StateInterface> & Actions = {
   [ActionTypes.CreateTransaction] ({ commit }, payload: CreateTransactionRequest) {
     commit(MutationTypes.SetLoading, true)
     post<CreateTransactionRequest, CreateTransactionResponse>(apipath.CreateTransaction, payload)
-      .then((_: CreateTransactionResponse) => {
+      .then(() => {
         commit(MutationTypes.SetError, '')
         commit(MutationTypes.SetLoading, false)
       })
@@ -90,3 +90,5 @@ export const actions: ActionTree<WalletState, StateInterface> & Actions = {
     }, 1000)
   }
 }
+
+export { WalletActions, actions }

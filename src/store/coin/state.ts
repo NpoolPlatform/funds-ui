@@ -1,13 +1,15 @@
-export interface CoinState {
+interface CoinState {
   Name: string
 
   error: string
   loading: boolean
 }
 
-export const state: CoinState = {
+const state: CoinState = {
   Name: '',
 
   error: '',
   loading: false
 }
+
+export { CoinState, state }
