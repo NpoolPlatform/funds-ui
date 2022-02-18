@@ -1,37 +1,43 @@
 <template>
-  <div class="wallet">
+  <div class='wallet'>
     <CoinList />
     <div>
       <q-btn
         no-caps
-        color="primary"
-        class="wallet-submit"
-        @click="handleSubmit"
-        :disable="loading"
-      >submit</q-btn>
+        color='primary'
+        class='wallet-submit'
+        :disable='loading'
+        @click='handleSubmit'
+      >
+        submit
+      </q-btn>
       <q-chip
-        class="wallet-address material-icons-outlined"
-        icon-right="content_copy"
-        color="primary"
+        class='wallet-address material-icons-outlined'
+        icon-right='content_copy'
+        color='primary'
         outline
         dense
         square
         clickable
-        @click="handleClick"
-      >{{ address }}</q-chip>
+        @click='handleClick'
+      >
+        {{ address }}
+      </q-chip>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { copyToClipboard } from 'quasar'
-import CoinList from '../base/CoinList.vue'
-import { computed, onUnmounted } from 'vue'
+import { computed, onUnmounted, defineAsyncComponent } from 'vue'
 import { useStore } from 'src/store/index'
 import { ActionTypes } from 'src/store/wallet/action-types'
 import { CreateWalletRequest } from 'src/store/wallet/types'
 import { MutationTypes as coinMutationTypes } from 'src/store/coin/mutation-types'
 import { MutationTypes } from 'src/store/wallet/mutation-types'
+
+const CoinList = defineAsyncComponent(() => import('../base/CoinList.vue'))
+
 const store = useStore()
 
 // getter

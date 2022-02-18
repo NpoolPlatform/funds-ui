@@ -1,37 +1,45 @@
 <template>
-  <div class="wallet">
+  <div class='wallet'>
     <CoinList />
-    <q-input standout v-model="from" label="from">
-      <template v-slot:before>
-        <q-icon class="material-icons-outlined" name="account_balance_wallet" size="lg" />
+    <q-input v-model='from' standout label='from'>
+      <template #before>
+        <q-icon class='material-icons-outlined' name='account_balance_wallet' size='lg' />
       </template>
     </q-input>
 
-    <q-input standout v-model="to" label="to">
-      <template v-slot:before>
-        <q-icon class="material-icons-outlined" name="account_balance_wallet" size="lg" />
+    <q-input standout v-model='to' label='to'>
+      <template #before>
+        <q-icon class='material-icons-outlined' name='account_balance_wallet' size='lg' />
       </template>
     </q-input>
 
-    <q-input standout v-model="amount" label="amount">
-      <template v-slot:before>
-        <q-icon class="material-icons-outlined" name="paid" size="lg" />
+    <q-input standout v-model='amount' label='amount'>
+      <template #before>
+        <q-icon class='material-icons-outlined' name='paid' size='lg' />
       </template>
     </q-input>
 
-    <q-btn no-caps color="primary" class="wallet-submit" @click="submit" :loading="loading">
+    <q-btn
+      no-caps
+      color='primary'
+      class='wallet-submit'
+      @click='submit'
+      :loading='loading'
+    >
       <div>submit</div>
     </q-btn>
   </div>
 </template>
 
-<script setup lang="ts">
-import CoinList from '../base/CoinList.vue'
-import { ref, computed } from 'vue'
+<script setup lang='ts'>
+import { ref, computed, defineAsyncComponent } from 'vue'
 import { CreateTransactionRequest, GetTransactionRequest } from 'src/store/wallet/types'
 import { ActionTypes } from 'src/store/wallet/action-types'
 import { useStore } from 'src/store'
 import { uid } from 'quasar'
+
+const CoinList = defineAsyncComponent(() => import('../base/CoinList.vue'))
+
 const from = ref('')
 const to = ref('')
 const amount = ref(0)

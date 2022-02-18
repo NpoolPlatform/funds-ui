@@ -1,8 +1,15 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view='lHh Lpr lFf'>
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <q-btn
+          flat
+          dense
+          round
+          icon='menu'
+          aria-label='Menu'
+          @click='toggleLeftDrawer'
+        />
         <q-toolbar-title>Wallet</q-toolbar-title>
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
@@ -14,10 +21,10 @@
   </q-layout>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { ref } from 'vue'
 const leftDrawerOpen = ref(false)
-function toggleLeftDrawer () {
+const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
